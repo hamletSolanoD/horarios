@@ -1,28 +1,29 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema Diario - Neon Schedule</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap');
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             background: linear-gradient(135deg, #0a0015 0%, #1a0033 25%, #2d0052 50%, #1a0033 75%, #0a0015 100%);
             font-family: 'Share Tech Mono', monospace;
             color: #fff;
-            padding: 30px;
+            padding: 20px;
             min-height: 100vh;
             position: relative;
-            overflow-x: hidden;
+            overflow: auto;
         }
-        
+
         body::before {
             content: '';
             position: fixed;
@@ -30,31 +31,41 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(255, 0, 255, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(0, 255, 255, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 40% 20%, rgba(255, 0, 128, 0.1) 0%, transparent 50%);
+            background:
+                radial-gradient(circle at 20% 50%, rgba(255, 0, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 255, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(255, 0, 128, 0.06) 0%, transparent 50%);
             animation: psychedelic 20s ease-in-out infinite;
             pointer-events: none;
             z-index: 0;
         }
-        
+
         @keyframes psychedelic {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            33% { transform: translate(5%, 5%) rotate(120deg); }
-            66% { transform: translate(-5%, 5%) rotate(240deg); }
+
+            0%,
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            33% {
+                transform: translate(5%, 5%) rotate(120deg);
+            }
+
+            66% {
+                transform: translate(-5%, 5%) rotate(240deg);
+            }
         }
-        
+
         .container {
-            max-width: 1400px;
+            max-width: 1800px;
             margin: 0 auto;
             position: relative;
             z-index: 1;
         }
-        
+
         h1 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 3.5em;
+            font-size: clamp(2em, 5vw, 3.5em);
             font-weight: 900;
             text-align: center;
             margin-bottom: 10px;
@@ -66,40 +77,48 @@
             animation: gradient-shift 3s linear infinite;
             text-shadow: 0 0 30px rgba(255, 0, 255, 0.5);
             letter-spacing: 3px;
+            filter: drop-shadow(0 0 20px rgba(255, 0, 255, 0.8));
         }
-        
+
         @keyframes gradient-shift {
-            0% { background-position: 0% center; }
-            100% { background-position: 200% center; }
+            0% {
+                background-position: 0% center;
+            }
+
+            100% {
+                background-position: 200% center;
+            }
         }
-        
+
         .subtitle {
             text-align: center;
-            font-size: 1.2em;
+            font-size: clamp(0.9em, 2vw, 1.2em);
             color: #00ffff;
-            text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
-            margin-bottom: 40px;
+            text-shadow: 0 0 15px rgba(0, 255, 255, 1), 0 0 30px rgba(0, 255, 255, 0.5);
+            margin-bottom: 30px;
             letter-spacing: 2px;
         }
-        
+
         .schedules {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 600px), 1fr));
+            gap: 25px;
+            margin-bottom: 20px;
         }
-        
+
         .schedule-block {
-            background: rgba(10, 0, 30, 0.7);
+            background: rgba(5, 0, 15, 0.92);
             border: 2px solid;
             border-radius: 15px;
-            padding: 25px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            backdrop-filter: blur(15px);
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.7),
+                inset 0 0 20px rgba(255, 255, 255, 0.02);
             position: relative;
             overflow: hidden;
         }
-        
+
         .schedule-block::before {
             content: '';
             position: absolute;
@@ -112,284 +131,414 @@
             z-index: -1;
             animation: border-rotate 4s linear infinite;
         }
-        
+
         @keyframes border-rotate {
-            0% { filter: hue-rotate(0deg); }
-            100% { filter: hue-rotate(360deg); }
+            0% {
+                filter: hue-rotate(0deg);
+            }
+
+            100% {
+                filter: hue-rotate(360deg);
+            }
         }
-        
-        .schedule-block.weekday {
-            border-image: linear-gradient(135deg, #ff00ff, #00ffff) 1;
-        }
-        
-        .schedule-block.weekend {
-            border-image: linear-gradient(135deg, #00ff00, #ff0080) 1;
-        }
-        
+
         h2 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.8em;
+            font-size: clamp(1.3em, 3vw, 1.8em);
             margin-bottom: 20px;
             text-align: center;
             letter-spacing: 2px;
         }
-        
+
         .weekday h2 {
             color: #00ffff;
-            text-shadow: 0 0 20px rgba(0, 255, 255, 0.8), 0 0 40px rgba(0, 255, 255, 0.4);
+            text-shadow:
+                0 0 20px rgba(0, 255, 255, 1),
+                0 0 40px rgba(0, 255, 255, 0.6),
+                0 0 60px rgba(0, 255, 255, 0.3);
         }
-        
+
         .weekend h2 {
             color: #00ff00;
-            text-shadow: 0 0 20px rgba(0, 255, 0, 0.8), 0 0 40px rgba(0, 255, 0, 0.4);
+            text-shadow:
+                0 0 20px rgba(0, 255, 0, 1),
+                0 0 40px rgba(0, 255, 0, 0.6),
+                0 0 60px rgba(0, 255, 0, 0.3);
         }
-        
+
         table {
             width: 100%;
             border-collapse: separate;
-            border-spacing: 0 8px;
+            border-spacing: 0 6px;
         }
-        
+
         tr {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(10, 0, 25, 0.85);
             transition: all 0.3s ease;
+            border-radius: 8px;
         }
-        
+
         tr:hover {
-            background: rgba(255, 0, 255, 0.2);
-            transform: translateX(5px);
+            background: rgba(255, 0, 255, 0.25);
+            transform: translateX(3px);
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.4);
         }
-        
+
         td {
-            padding: 12px 15px;
-            font-size: 0.95em;
+            padding: 10px 12px;
+            font-size: clamp(0.8em, 1.5vw, 0.95em);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
-        
+
+        td:first-child {
+            border-radius: 8px 0 0 8px;
+        }
+
+        td:last-child {
+            border-radius: 0 8px 8px 0;
+        }
+
+        .checkbox-cell {
+            width: 40px;
+            text-align: center;
+            padding: 8px;
+        }
+
+        .checkbox-wrapper {
+            display: inline-block;
+            position: relative;
+        }
+
+        input[type="checkbox"] {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ff00ff;
+            border-radius: 4px;
+            background: rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            box-shadow:
+                0 0 10px rgba(255, 0, 255, 0.5),
+                inset 0 0 5px rgba(255, 0, 255, 0.2);
+        }
+
+        input[type="checkbox"]:hover {
+            border-color: #00ffff;
+            box-shadow:
+                0 0 15px rgba(0, 255, 255, 0.7),
+                inset 0 0 8px rgba(0, 255, 255, 0.3);
+        }
+
+        input[type="checkbox"]:checked {
+            background: linear-gradient(135deg, #ff00ff, #00ffff);
+            border-color: #00ffff;
+            box-shadow:
+                0 0 20px rgba(0, 255, 255, 0.9),
+                0 0 40px rgba(255, 0, 255, 0.6);
+        }
+
+        input[type="checkbox"]:checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #000;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
         .time {
             color: #ff00ff;
             font-weight: bold;
-            text-shadow: 0 0 10px rgba(255, 0, 255, 0.6);
+            text-shadow:
+                0 0 10px rgba(255, 0, 255, 0.8),
+                0 0 20px rgba(255, 0, 255, 0.4),
+                2px 2px 4px rgba(0, 0, 0, 0.8);
             white-space: nowrap;
-            min-width: 140px;
+            min-width: 130px;
+            background: rgba(255, 0, 255, 0.1);
         }
-        
+
         .activity {
             color: #ffffff;
-            text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+            text-shadow:
+                0 0 8px rgba(255, 255, 255, 0.6),
+                2px 2px 6px rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.4);
         }
-        
+
         .highlight {
             color: #00ffff;
             font-weight: bold;
+            text-shadow:
+                0 0 10px rgba(0, 255, 255, 0.8),
+                0 0 20px rgba(0, 255, 255, 0.4);
         }
-        
+
         .footer {
             text-align: center;
-            margin-top: 30px;
-            font-size: 0.9em;
+            margin-top: 20px;
+            font-size: clamp(0.8em, 1.5vw, 0.9em);
             color: #ff0080;
-            text-shadow: 0 0 10px rgba(255, 0, 128, 0.6);
+            text-shadow:
+                0 0 15px rgba(255, 0, 128, 0.9),
+                0 0 30px rgba(255, 0, 128, 0.5);
             letter-spacing: 1px;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 0, 128, 0.3);
         }
-        
-        @media print {
+
+        @media (max-width: 1200px) {
+            .schedules {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
             body {
-                background: #0a0015;
-                padding: 20px;
+                padding: 10px;
             }
-            
-            body::before {
-                display: none;
-            }
-            
-            .schedules {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-            
+
             .schedule-block {
-                page-break-inside: avoid;
-                break-inside: avoid;
+                padding: 15px;
+            }
+
+            td {
+                padding: 8px 10px;
+            }
+
+            .time {
+                min-width: 100px;
             }
         }
-        
-        @media (max-width: 1024px) {
-            .schedules {
-                grid-template-columns: 1fr;
-            }
-            
+
+        @media (orientation: portrait) and (max-width: 768px) {
             h1 {
-                font-size: 2.5em;
+                font-size: 2em;
+            }
+
+            .subtitle {
+                font-size: 0.9em;
+                margin-bottom: 20px;
             }
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>⚡ SISTEMA DIARIO ⚡</h1>
         <div class="subtitle">OPTIMIZACIÓN NEURAL ACTIVA</div>
-        
+
         <div class="schedules">
             <div class="schedule-block weekday">
                 <h2>🌟 LUNES - VIERNES 🌟</h2>
                 <table>
                     <tr>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
                         <td class="time">6:00 am</td>
                         <td class="activity">Levantarte, lavarte los dientes, preparar café</td>
                     </tr>
                     <tr>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
                         <td class="time">6:15 – 6:35 am</td>
                         <td class="activity"><span class="highlight">Estiramientos y ejercicio</span></td>
                     </tr>
                     <tr>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
                         <td class="time">6:35 – 6:55 am</td>
-                        <td class="activity"><span class="highlight">Obsidian + Diario de autobienestar</span> (15–20 min)</td>
+                        <td class="activity"><span class="highlight">Obsidian + Diario de autobienestar</span> (15–20
+                            min)</td>
                     </tr>
                     <tr>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
                         <td class="time">6:55 am</td>
                         <td class="activity">Café</td>
                     </tr>
                     <tr>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
                         <td class="time">7:00 – 8:00 am</td>
                         <td class="activity"><span class="highlight">Escribir Samadhi</span></td>
                     </tr>
                     <tr>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
                         <td class="time">8:00 – 8:20 am</td>
-                        <td class="activity"><span class="highlight">Meditación</span> (antes o después de escribir)</td>
+                        <td class="activity"><span class="highlight">Meditación</span> (antes o después de escribir)
+                        </td>
                     </tr>
                     <tr>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
                         <td class="time">8:20 – 9:50 am</td>
                         <td class="activity"><span class="highlight">Estudiar algoritmia</span></td>
                     </tr>
                     <tr>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
                         <td class="time">9:50 – 10:20 am</td>
                         <td class="activity"><span class="highlight">Correr</span></td>
                     </tr>
                     <tr>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
                         <td class="time">10:30 – 12:00 pm</td>
                         <td class="activity">Juntas de trabajo</td>
                     </tr>
                     <tr>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
                         <td class="time">12:00 – 4:00 pm</td>
                         <td class="activity"><span class="highlight">Trabajo profundo</span></td>
                     </tr>
                     <tr>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
                         <td class="time">4:00 – 5:00 pm</td>
                         <td class="activity">Lectura (inglés, mejora personal o adiestramiento canino)</td>
                     </tr>
                     <tr>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
                         <td class="time">5:00 – 5:30 pm</td>
                         <td class="activity">Pendientes finales y salida del trabajo</td>
                     </tr>
                     <tr>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
                         <td class="time">5:30 – 6:30 pm</td>
                         <td class="activity">Cocinar y comer</td>
                     </tr>
                     <tr>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
                         <td class="time">6:30 – 7:00 pm</td>
                         <td class="activity"><span class="highlight">Pasear perras</span> (practicar comandos)</td>
                     </tr>
                     <tr>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
                         <td class="time">7:00 – 7:30 pm</td>
                         <td class="activity">Bañarte</td>
                     </tr>
                     <tr>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
                         <td class="time">7:30 – 8:30 pm</td>
                         <td class="activity">Tiempo con Annie y Sule</td>
                     </tr>
                     <tr>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
                         <td class="time">8:30 – 9:00 pm</td>
                         <td class="activity">Leerle a Annie</td>
                     </tr>
                     <tr>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
                         <td class="time">9:00 – 9:15 pm</td>
                         <td class="activity">Lavarte los dientes</td>
                     </tr>
                     <tr>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
                         <td class="time">9:15 – 9:45 pm</td>
                         <td class="activity">Lectura en oficina</td>
                     </tr>
                     <tr>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
                         <td class="time">9:45 – 10:00 pm</td>
-                        <td class="activity"><span class="highlight">Trackeo de horas, conclusiones y objetivos</span></td>
+                        <td class="activity"><span class="highlight">Trackeo de horas, conclusiones y objetivos</span>
+                        </td>
                     </tr>
                 </table>
             </div>
-            
+
             <div class="schedule-block weekend">
                 <h2>🎨 FIN DE SEMANA 🎨</h2>
                 <table>
                     <tr>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
                         <td class="time">6:00 am</td>
                         <td class="activity">Levantarte, lavarte los dientes, preparar café</td>
                     </tr>
                     <tr>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
                         <td class="time">6:15 – 6:35 am</td>
                         <td class="activity"><span class="highlight">Estiramientos y ejercicio</span></td>
                     </tr>
                     <tr>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
                         <td class="time">6:35 – 6:55 am</td>
                         <td class="activity"><span class="highlight">Obsidian + Diario de autobienestar</span></td>
                     </tr>
                     <tr>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
                         <td class="time">7:00 – 8:00 am</td>
                         <td class="activity"><span class="highlight">Escribir Samadhi</span></td>
                     </tr>
                     <tr>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
                         <td class="time">8:00 – 8:20 am</td>
                         <td class="activity"><span class="highlight">Meditación</span></td>
                     </tr>
                     <tr>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
                         <td class="time">8:20 – 9:50 am</td>
-                        <td class="activity"><span class="highlight">Estudiar algoritmia / filosofía / historia</span></td>
+                        <td class="activity"><span class="highlight">Estudiar algoritmia / filosofía / historia</span>
+                        </td>
                     </tr>
                     <tr>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
                         <td class="time">10:00 – 12:00 pm</td>
                         <td class="activity">Quehaceres de casa</td>
                     </tr>
                     <tr>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
                         <td class="time">12:00 – 2:00 pm</td>
                         <td class="activity">Cocinar y comer en familia</td>
                     </tr>
                     <tr>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
                         <td class="time">2:00 – 4:00 pm</td>
                         <td class="activity"><span class="highlight">Bloque creativo: pintar/dibujar cuadros</span></td>
                     </tr>
                     <tr>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
                         <td class="time">4:00 – 6:00 pm</td>
-                        <td class="activity"><span class="highlight">Desarrollo de tu app (Aeternum Dashboard)</span></td>
+                        <td class="activity"><span class="highlight">Desarrollo de tu app (Aeternum Dashboard)</span>
+                        </td>
                     </tr>
                     <tr>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
                         <td class="time">6:00 – 7:00 pm</td>
                         <td class="activity">Pasear perras y convivencia con mascotas</td>
                     </tr>
                     <tr>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
                         <td class="time">7:00 – 8:00 pm</td>
                         <td class="activity">Tiempo con Annie y Sule</td>
                     </tr>
                     <tr>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
                         <td class="time">8:00 – 9:00 pm</td>
                         <td class="activity">Lectura (mejora personal, inglés o adiestramiento canino)</td>
                     </tr>
                     <tr>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
                         <td class="time">9:00 – 9:15 pm</td>
                         <td class="activity">Lavarte los dientes</td>
                     </tr>
                     <tr>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
                         <td class="time">9:15 – 9:45 pm</td>
                         <td class="activity">Lectura en oficina</td>
                     </tr>
                     <tr>
+                        <td class="checkbox-cell"><input type="checkbox"></td>
                         <td class="time">9:45 – 10:00 pm</td>
-                        <td class="activity"><span class="highlight">Trackeo de horas, conclusiones y objetivos</span></td>
+                        <td class="activity"><span class="highlight">Trackeo de horas, conclusiones y objetivos</span>
+                        </td>
                     </tr>
                 </table>
             </div>
         </div>
-        
+
         <div class="footer">
             ◇ DISCIPLINA + CONSISTENCIA = TRANSFORMACIÓN ◇
         </div>
     </div>
 </body>
+
 </html>
