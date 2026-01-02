@@ -57,7 +57,7 @@
         }
 
         .container {
-            max-width: 1800px;
+            max-width: 1200px;
             margin: 0 auto;
             position: relative;
             z-index: 1;
@@ -95,15 +95,18 @@
             font-size: clamp(0.9em, 2vw, 1.2em);
             color: #00ffff;
             text-shadow: 0 0 15px rgba(0, 255, 255, 1), 0 0 30px rgba(0, 255, 255, 0.5);
-            margin-bottom: 30px;
+            margin-bottom: 10px;
             letter-spacing: 2px;
         }
 
-        .schedules {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(100%, 600px), 1fr));
-            gap: 25px;
-            margin-bottom: 20px;
+        .current-time {
+            text-align: center;
+            font-size: clamp(1em, 2.5vw, 1.4em);
+            color: #ff00ff;
+            text-shadow: 0 0 15px rgba(255, 0, 255, 1), 0 0 30px rgba(255, 0, 255, 0.5);
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+            font-family: 'Orbitron', sans-serif;
         }
 
         .schedule-block {
@@ -117,6 +120,7 @@
                 inset 0 0 20px rgba(255, 255, 255, 0.02);
             position: relative;
             overflow: hidden;
+            margin-bottom: 20px;
         }
 
         .schedule-block::before {
@@ -182,6 +186,22 @@
             background: rgba(255, 0, 255, 0.25);
             transform: translateX(3px);
             box-shadow: 0 0 15px rgba(255, 0, 255, 0.4);
+        }
+
+        tr.current-activity {
+            background: rgba(255, 0, 255, 0.4) !important;
+            transform: translateX(5px);
+            box-shadow: 0 0 25px rgba(255, 0, 255, 0.8), 0 0 40px rgba(0, 255, 255, 0.5);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 25px rgba(255, 0, 255, 0.8), 0 0 40px rgba(0, 255, 255, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 35px rgba(255, 0, 255, 1), 0 0 50px rgba(0, 255, 255, 0.7);
+            }
         }
 
         td {
@@ -293,10 +313,8 @@
             border: 1px solid rgba(255, 0, 128, 0.3);
         }
 
-        @media (max-width: 1200px) {
-            .schedules {
-                grid-template-columns: 1fr;
-            }
+        .hidden {
+            display: none;
         }
 
         @media (max-width: 768px) {
@@ -334,211 +352,278 @@
     <div class="container">
         <h1>⚡ SISTEMA DIARIO ⚡</h1>
         <div class="subtitle">OPTIMIZACIÓN NEURAL ACTIVA</div>
+        <div class="current-time" id="currentTime"></div>
 
-        <div class="schedules">
-            <div class="schedule-block weekday">
-                <h2>🌟 LUNES - VIERNES 🌟</h2>
-                <table>
-                    <tr>
-                        <td class="checkbox-cell"><input type="checkbox"></td>
-                        <td class="time">6:00 am</td>
-                        <td class="activity">Levantarte, lavarte los dientes, preparar café</td>
-                    </tr>
-                    <tr>
-                        <td class="checkbox-cell"><input type="checkbox"></td>
-                        <td class="time">6:15 – 6:35 am</td>
-                        <td class="activity"><span class="highlight">Estiramientos y ejercicio</span></td>
-                    </tr>
-                    <tr>
-                        <td class="checkbox-cell"><input type="checkbox"></td>
-                        <td class="time">6:35 – 6:55 am</td>
-                        <td class="activity"><span class="highlight">Obsidian + Diario de autobienestar</span> (15–20
-                            min)</td>
-                    </tr>
-                    <tr>
-                        <td class="checkbox-cell"><input type="checkbox"></td>
-                        <td class="time">6:55 am</td>
-                        <td class="activity">Café</td>
-                    </tr>
-                    <tr>
-                        <td class="checkbox-cell"><input type="checkbox"></td>
-                        <td class="time">7:00 – 8:00 am</td>
-                        <td class="activity"><span class="highlight">Escribir Samadhi</span></td>
-                    </tr>
-                    <tr>
-                        <td class="checkbox-cell"><input type="checkbox"></td>
-                        <td class="time">8:00 – 8:20 am</td>
-                        <td class="activity"><span class="highlight">Meditación</span> (antes o después de escribir)
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="checkbox-cell"><input type="checkbox"></td>
-                        <td class="time">8:20 – 9:50 am</td>
-                        <td class="activity"><span class="highlight">Estudiar algoritmia</span></td>
-                    </tr>
-                    <tr>
-                        <td class="checkbox-cell"><input type="checkbox"></td>
-                        <td class="time">9:50 – 10:20 am</td>
-                        <td class="activity"><span class="highlight">Correr</span></td>
-                    </tr>
-                    <tr>
-                        <td class="checkbox-cell"><input type="checkbox"></td>
-                        <td class="time">10:30 – 12:00 pm</td>
-                        <td class="activity">Juntas de trabajo</td>
-                    </tr>
-                    <tr>
-                        <td class="checkbox-cell"><input type="checkbox"></td>
-                        <td class="time">12:00 – 4:00 pm</td>
-                        <td class="activity"><span class="highlight">Trabajo profundo</span></td>
-                    </tr>
-                    <tr>
-                        <td class="checkbox-cell"><input type="checkbox"></td>
-                        <td class="time">4:00 – 5:00 pm</td>
-                        <td class="activity">Lectura (inglés, mejora personal o adiestramiento canino)</td>
-                    </tr>
-                    <tr>
-                        <td class="checkbox-cell"><input type="checkbox"></td>
-                        <td class="time">5:00 – 5:30 pm</td>
-                        <td class="activity">Pendientes finales y salida del trabajo</td>
-                    </tr>
-                    <tr>
-                        <td class="checkbox-cell"><input type="checkbox"></td>
-                        <td class="time">5:30 – 6:30 pm</td>
-                        <td class="activity">Cocinar y comer</td>
-                    </tr>
-                    <tr>
-                        <td class="checkbox-cell"><input type="checkbox"></td>
-                        <td class="time">6:30 – 7:00 pm</td>
-                        <td class="activity"><span class="highlight">Pasear perras</span> (practicar comandos)</td>
-                    </tr>
-                    <tr>
-                        <td class="checkbox-cell"><input type="checkbox"></td>
-                        <td class="time">7:00 – 7:30 pm</td>
-                        <td class="activity">Bañarte</td>
-                    </tr>
-                    <tr>
-                        <td class="checkbox-cell"><input type="checkbox"></td>
-                        <td class="time">7:30 – 8:30 pm</td>
-                        <td class="activity">Tiempo con Annie y Sule</td>
-                    </tr>
-                    <tr>
-                        <td class="checkbox-cell"><input type="checkbox"></td>
-                        <td class="time">8:30 – 9:00 pm</td>
-                        <td class="activity">Leerle a Annie</td>
-                    </tr>
-                    <tr>
-                        <td class="checkbox-cell"><input type="checkbox"></td>
-                        <td class="time">9:00 – 9:15 pm</td>
-                        <td class="activity">Lavarte los dientes</td>
-                    </tr>
-                    <tr>
-                        <td class="checkbox-cell"><input type="checkbox"></td>
-                        <td class="time">9:15 – 9:45 pm</td>
-                        <td class="activity">Lectura en oficina</td>
-                    </tr>
-                    <tr>
-                        <td class="checkbox-cell"><input type="checkbox"></td>
-                        <td class="time">9:45 – 10:00 pm</td>
-                        <td class="activity"><span class="highlight">Trackeo de horas, conclusiones y objetivos</span>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+        <div class="schedule-block weekday" id="weekdaySchedule">
+            <h2>🌟 LUNES - VIERNES 🌟</h2>
+            <table>
+                <tr data-start="06:00" data-end="06:15">
+                    <td class="checkbox-cell"><input type="checkbox"></td>
+                    <td class="time">6:00 – 6:15 am</td>
+                    <td class="activity">Levantarse, lavarse dientes, preparar café</td>
+                </tr>
+                <tr data-start="06:15" data-end="06:35">
+                    <td class="checkbox-cell"><input type="checkbox"></td>
+                    <td class="time">6:15 – 6:35 am</td>
+                    <td class="activity"><span class="highlight">Estiramientos y ejercicio</span></td>
+                </tr>
+                <tr data-start="06:35" data-end="06:55">
+                    <td class="checkbox-cell"><input type="checkbox"></td>
+                    <td class="time">6:35 – 6:55 am</td>
+                    <td class="activity"><span class="highlight">KairoGenesis + Diario de Autobienestar</span></td>
+                </tr>
+                <tr data-start="06:55" data-end="07:55">
+                    <td class="checkbox-cell"><input type="checkbox"></td>
+                    <td class="time">6:55 – 7:55 am</td>
+                    <td class="activity"><span class="highlight">Escribir Samadhi</span></td>
+                </tr>
+                <tr data-start="07:55" data-end="08:15">
+                    <td class="checkbox-cell"><input type="checkbox"></td>
+                    <td class="time">7:55 – 8:15 am</td>
+                    <td class="activity"><span class="highlight">Correr</span></td>
+                </tr>
+                <tr data-start="08:15" data-end="09:15">
+                    <td class="checkbox-cell"><input type="checkbox"></td>
+                    <td class="time">8:15 – 9:15 am</td>
+                    <td class="activity"><span class="highlight">Deep work: Algoritmia</span></td>
+                </tr>
+                <tr data-start="09:15" data-end="09:30">
+                    <td class="checkbox-cell"><input type="checkbox"></td>
+                    <td class="time">9:15 – 9:30 am</td>
+                    <td class="activity"><span class="highlight">Lectura breve</span></td>
+                </tr>
+                <tr data-start="09:30" data-end="10:30">
+                    <td class="checkbox-cell"><input type="checkbox"></td>
+                    <td class="time">9:30 – 10:30 am</td>
+                    <td class="activity">Juntas de trabajo</td>
+                </tr>
+                <tr data-start="10:30" data-end="11:30">
+                    <td class="checkbox-cell"><input type="checkbox"></td>
+                    <td class="time">10:30 – 11:30 am</td>
+                    <td class="activity"><span class="highlight">Lectura profunda</span></td>
+                </tr>
+                <tr data-start="11:30" data-end="15:00">
+                    <td class="checkbox-cell"><input type="checkbox"></td>
+                    <td class="time">11:30 am – 3:00 pm</td>
+                    <td class="activity"><span class="highlight">Proyectos laborales / Trabajo profundo</span></td>
+                </tr>
+                <tr data-start="15:00" data-end="15:30">
+                    <td class="checkbox-cell"><input type="checkbox"></td>
+                    <td class="time">3:00 – 3:30 pm</td>
+                    <td class="activity"><span class="highlight">BREAK</span></td>
+                </tr>
+                <tr data-start="15:30" data-end="16:30">
+                    <td class="checkbox-cell"><input type="checkbox"></td>
+                    <td class="time">3:30 – 4:30 pm</td>
+                    <td class="activity"><span class="highlight">Trabajo profundo</span> (pendientes finales)</td>
+                </tr>
+                <tr data-start="16:30" data-end="18:00">
+                    <td class="checkbox-cell"><input type="checkbox"></td>
+                    <td class="time">4:30 – 6:00 pm</td>
+                    <td class="activity">Cocinar y comer</td>
+                </tr>
+                <tr data-start="18:00" data-end="18:30">
+                    <td class="checkbox-cell"><input type="checkbox"></td>
+                    <td class="time">6:00 – 6:30 pm</td>
+                    <td class="activity"><span class="highlight">Pasear perras</span> (practicar comandos)</td>
+                </tr>
+                <tr data-start="18:30" data-end="18:45">
+                    <td class="checkbox-cell"><input type="checkbox"></td>
+                    <td class="time">6:30 – 6:45 pm</td>
+                    <td class="activity">Bañarse</td>
+                </tr>
+                <tr data-start="19:30" data-end="20:30">
+                    <td class="checkbox-cell"><input type="checkbox"></td>
+                    <td class="time">7:30 – 8:30 pm</td>
+                    <td class="activity">Tiempo con Annie</td>
+                </tr>
+                <tr data-start="20:30" data-end="21:00">
+                    <td class="checkbox-cell"><input type="checkbox"></td>
+                    <td class="time">8:30 – 9:00 pm</td>
+                    <td class="activity">Ver/ayudar en el baño de Annie</td>
+                </tr>
+                <tr data-start="21:00" data-end="21:20">
+                    <td class="checkbox-cell"><input type="checkbox"></td>
+                    <td class="time">9:00 – 9:20 pm</td>
+                    <td class="activity"><span class="highlight">Meditación nocturna</span></td>
+                </tr>
+                <tr data-start="21:20" data-end="21:30">
+                    <td class="checkbox-cell"><input type="checkbox"></td>
+                    <td class="time">9:20 – 9:30 pm</td>
+                    <td class="activity">Lavarse dientes</td>
+                </tr>
+                <tr data-start="21:30" data-end="22:00">
+                    <td class="checkbox-cell"><input type="checkbox"></td>
+                    <td class="time">9:30 – 10:00 pm</td>
+                    <td class="activity">Lectura ligera en oficina / cierre del día</td>
+                </tr>
+                <tr data-start="22:00" data-end="22:30">
+                    <td class="checkbox-cell"><input type="checkbox"></td>
+                    <td class="time">10:00 – 10:30 pm</td>
+                    <td class="activity"><span class="highlight">Trackeo de horas, conclusiones y objetivos</span></td>
+                </tr>
+            </table>
+        </div>
 
-            <div class="schedule-block weekend">
-                <h2>🎨 FIN DE SEMANA 🎨</h2>
-                <table>
-                    <tr>
-                        <td class="checkbox-cell"><input type="checkbox"></td>
-                        <td class="time">6:00 am</td>
-                        <td class="activity">Levantarte, lavarte los dientes, preparar café</td>
-                    </tr>
-                    <tr>
-                        <td class="checkbox-cell"><input type="checkbox"></td>
-                        <td class="time">6:15 – 6:35 am</td>
-                        <td class="activity"><span class="highlight">Estiramientos y ejercicio</span></td>
-                    </tr>
-                    <tr>
-                        <td class="checkbox-cell"><input type="checkbox"></td>
-                        <td class="time">6:35 – 6:55 am</td>
-                        <td class="activity"><span class="highlight">Obsidian + Diario de autobienestar</span></td>
-                    </tr>
-                    <tr>
-                        <td class="checkbox-cell"><input type="checkbox"></td>
-                        <td class="time">7:00 – 8:00 am</td>
-                        <td class="activity"><span class="highlight">Escribir Samadhi</span></td>
-                    </tr>
-                    <tr>
-                        <td class="checkbox-cell"><input type="checkbox"></td>
-                        <td class="time">8:00 – 8:20 am</td>
-                        <td class="activity"><span class="highlight">Meditación</span></td>
-                    </tr>
-                    <tr>
-                        <td class="checkbox-cell"><input type="checkbox"></td>
-                        <td class="time">8:20 – 9:50 am</td>
-                        <td class="activity"><span class="highlight">Estudiar algoritmia / filosofía / historia</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="checkbox-cell"><input type="checkbox"></td>
-                        <td class="time">10:00 – 12:00 pm</td>
-                        <td class="activity">Quehaceres de casa</td>
-                    </tr>
-                    <tr>
-                        <td class="checkbox-cell"><input type="checkbox"></td>
-                        <td class="time">12:00 – 2:00 pm</td>
-                        <td class="activity">Cocinar y comer en familia</td>
-                    </tr>
-                    <tr>
-                        <td class="checkbox-cell"><input type="checkbox"></td>
-                        <td class="time">2:00 – 4:00 pm</td>
-                        <td class="activity"><span class="highlight">Bloque creativo: pintar/dibujar cuadros</span></td>
-                    </tr>
-                    <tr>
-                        <td class="checkbox-cell"><input type="checkbox"></td>
-                        <td class="time">4:00 – 6:00 pm</td>
-                        <td class="activity"><span class="highlight">Desarrollo de tu app (Aeternum Dashboard)</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="checkbox-cell"><input type="checkbox"></td>
-                        <td class="time">6:00 – 7:00 pm</td>
-                        <td class="activity">Pasear perras y convivencia con mascotas</td>
-                    </tr>
-                    <tr>
-                        <td class="checkbox-cell"><input type="checkbox"></td>
-                        <td class="time">7:00 – 8:00 pm</td>
-                        <td class="activity">Tiempo con Annie y Sule</td>
-                    </tr>
-                    <tr>
-                        <td class="checkbox-cell"><input type="checkbox"></td>
-                        <td class="time">8:00 – 9:00 pm</td>
-                        <td class="activity">Lectura (mejora personal, inglés o adiestramiento canino)</td>
-                    </tr>
-                    <tr>
-                        <td class="checkbox-cell"><input type="checkbox"></td>
-                        <td class="time">9:00 – 9:15 pm</td>
-                        <td class="activity">Lavarte los dientes</td>
-                    </tr>
-                    <tr>
-                        <td class="checkbox-cell"><input type="checkbox"></td>
-                        <td class="time">9:15 – 9:45 pm</td>
-                        <td class="activity">Lectura en oficina</td>
-                    </tr>
-                    <tr>
-                        <td class="checkbox-cell"><input type="checkbox"></td>
-                        <td class="time">9:45 – 10:00 pm</td>
-                        <td class="activity"><span class="highlight">Trackeo de horas, conclusiones y objetivos</span>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+        <div class="schedule-block weekend hidden" id="weekendSchedule">
+            <h2>🎨 FIN DE SEMANA 🎨</h2>
+            <table>
+                <tr data-start="06:00" data-end="06:15">
+                    <td class="checkbox-cell"><input type="checkbox"></td>
+                    <td class="time">6:00 am</td>
+                    <td class="activity">Levantarte, lavarte los dientes, preparar café</td>
+                </tr>
+                <tr data-start="06:15" data-end="06:35">
+                    <td class="checkbox-cell"><input type="checkbox"></td>
+                    <td class="time">6:15 – 6:35 am</td>
+                    <td class="activity"><span class="highlight">Estiramientos y ejercicio</span></td>
+                </tr>
+                <tr data-start="06:35" data-end="06:55">
+                    <td class="checkbox-cell"><input type="checkbox"></td>
+                    <td class="time">6:35 – 6:55 am</td>
+                    <td class="activity"><span class="highlight">Obsidian + Diario de autobienestar</span></td>
+                </tr>
+                <tr data-start="07:00" data-end="08:00">
+                    <td class="checkbox-cell"><input type="checkbox"></td>
+                    <td class="time">7:00 – 8:00 am</td>
+                    <td class="activity"><span class="highlight">Escribir Samadhi</span></td>
+                </tr>
+                <tr data-start="08:00" data-end="08:20">
+                    <td class="checkbox-cell"><input type="checkbox"></td>
+                    <td class="time">8:00 – 8:20 am</td>
+                    <td class="activity"><span class="highlight">Meditación</span></td>
+                </tr>
+                <tr data-start="08:20" data-end="09:50">
+                    <td class="checkbox-cell"><input type="checkbox"></td>
+                    <td class="time">8:20 – 9:50 am</td>
+                    <td class="activity"><span class="highlight">Estudiar algoritmia / filosofía / historia</span></td>
+                </tr>
+                <tr data-start="10:00" data-end="12:00">
+                    <td class="checkbox-cell"><input type="checkbox"></td>
+                    <td class="time">10:00 – 12:00 pm</td>
+                    <td class="activity">Quehaceres de casa</td>
+                </tr>
+                <tr data-start="12:00" data-end="14:00">
+                    <td class="checkbox-cell"><input type="checkbox"></td>
+                    <td class="time">12:00 – 2:00 pm</td>
+                    <td class="activity">Cocinar y comer en familia</td>
+                </tr>
+                <tr data-start="14:00" data-end="16:00">
+                    <td class="checkbox-cell"><input type="checkbox"></td>
+                    <td class="time">2:00 – 4:00 pm</td>
+                    <td class="activity"><span class="highlight">Bloque creativo: pintar/dibujar cuadros</span></td>
+                </tr>
+                <tr data-start="16:00" data-end="18:00">
+                    <td class="checkbox-cell"><input type="checkbox"></td>
+                    <td class="time">4:00 – 6:00 pm</td>
+                    <td class="activity"><span class="highlight">Desarrollo de tu app (Aeternum Dashboard)</span></td>
+                </tr>
+                <tr data-start="18:00" data-end="19:00">
+                    <td class="checkbox-cell"><input type="checkbox"></td>
+                    <td class="time">6:00 – 7:00 pm</td>
+                    <td class="activity">Pasear perras y convivencia con mascotas</td>
+                </tr>
+                <tr data-start="19:00" data-end="20:00">
+                    <td class="checkbox-cell"><input type="checkbox"></td>
+                    <td class="time">7:00 – 8:00 pm</td>
+                    <td class="activity">Tiempo con Annie y Sule</td>
+                </tr>
+                <tr data-start="20:00" data-end="21:00">
+                    <td class="checkbox-cell"><input type="checkbox"></td>
+                    <td class="time">8:00 – 9:00 pm</td>
+                    <td class="activity">Lectura (mejora personal, inglés o adiestramiento canino)</td>
+                </tr>
+                <tr data-start="21:00" data-end="21:15">
+                    <td class="checkbox-cell"><input type="checkbox"></td>
+                    <td class="time">9:00 – 9:15 pm</td>
+                    <td class="activity">Lavarte los dientes</td>
+                </tr>
+                <tr data-start="21:15" data-end="21:45">
+                    <td class="checkbox-cell"><input type="checkbox"></td>
+                    <td class="time">9:15 – 9:45 pm</td>
+                    <td class="activity">Lectura en oficina</td>
+                </tr>
+                <tr data-start="21:45" data-end="22:00">
+                    <td class="checkbox-cell"><input type="checkbox"></td>
+                    <td class="time">9:45 – 10:00 pm</td>
+                    <td class="activity"><span class="highlight">Trackeo de horas, conclusiones y objetivos</span></td>
+                </tr>
+            </table>
         </div>
 
         <div class="footer">
             ◇ DISCIPLINA + CONSISTENCIA = TRANSFORMACIÓN ◇
         </div>
     </div>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const options = {
+                timeZone: 'America/Denver',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: true,
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            };
+            
+            const timeString = now.toLocaleString('es-MX', options);
+            document.getElementById('currentTime').textContent = timeString;
+            
+            const dayOfWeek = new Date(now.toLocaleString('en-US', { timeZone: 'America/Denver' })).getDay();
+            const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+            
+            const weekdaySchedule = document.getElementById('weekdaySchedule');
+            const weekendSchedule = document.getElementById('weekendSchedule');
+            
+            if (isWeekend) {
+                weekdaySchedule.classList.add('hidden');
+                weekendSchedule.classList.remove('hidden');
+                highlightCurrentActivity(weekendSchedule, now);
+            } else {
+                weekdaySchedule.classList.remove('hidden');
+                weekendSchedule.classList.add('hidden');
+                highlightCurrentActivity(weekdaySchedule, now);
+            }
+        }
+        
+        function highlightCurrentActivity(scheduleBlock, now) {
+            const currentTime = now.toLocaleString('en-US', { 
+                timeZone: 'America/Denver', 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                hour12: false 
+            });
+            
+            const [hours, minutes] = currentTime.split(':').map(Number);
+            const currentMinutes = hours * 60 + minutes;
+            
+            const rows = scheduleBlock.querySelectorAll('tr[data-start]');
+            rows.forEach(row => {
+                const startTime = row.getAttribute('data-start');
+                const endTime = row.getAttribute('data-end');
+                
+                const [startHour, startMin] = startTime.split(':').map(Number);
+                const [endHour, endMin] = endTime.split(':').map(Number);
+                
+                const startMinutes = startHour * 60 + startMin;
+                const endMinutes = endHour * 60 + endMin;
+                
+                if (currentMinutes >= startMinutes && currentMinutes < endMinutes) {
+                    row.classList.add('current-activity');
+                } else {
+                    row.classList.remove('current-activity');
+                }
+            });
+        }
+        
+        updateTime();
+        setInterval(updateTime, 1000);
+    </script>
 </body>
 
 </html>
